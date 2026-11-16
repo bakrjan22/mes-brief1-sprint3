@@ -83,15 +83,17 @@ function displayCountries(countries) {
 function filterCountries(countries) {
   if(select.value == "Default"){
     return countries;
+  }else {
+      countries = countries.filter(n => n.region == select.value);
+
   }
-  if(select.value == "Europe"){
-    countries = countries.filter(n => n.region = "Europe");
-    console.log("okk");
-    
-  }
+
   return countries;
 }
 
+select.addEventListener("change", (e) => {
+  fetchCountries();
+})
 
 // ------------------------------------------------------------
 // BONUS
