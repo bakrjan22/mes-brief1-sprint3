@@ -1,6 +1,9 @@
 const API_URL = "https://countries.dev/countries";
 
-// Tous les pays reçus de l'API (rempli une seule fois, au chargement)
+async function get_all(){
+  
+}
+
 let allCountries = [];
 
 // TODO : récupère ici les éléments du DOM dont tu as besoin
