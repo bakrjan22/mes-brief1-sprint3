@@ -1,8 +1,29 @@
 const API_URL = "https://countries.dev/countries";
 
-async function get_all(){
-  
+const country = document.getElementById("country");
+const capital = document.getElementById("capital");
+const population = document.getElementById("population");
+const cards_display = document.getElementById("cards-display");
+const select = document.getElementById("select");
+
+function card_builder(img,country_name,capitale_name,population){
+  const card = document.createElement('div');
+  card.className = "cards";
+  const h3_country = document.createElement("h3");
+  h3_country.textContent = country_name;
+  card.appendChild(h3_country);
+
+  const h4_capitale = document.createElement("h4");
+  h4_capitale.textContent = capitale_name;
+  card.appendChild(h4_capitale);
+
+  const h5_popu = document.createElement("h5");
+  h5_popu.textContent = population;
+  card.appendChild(h5_popu);
+
+  cards_display.appendChild(card);
 }
+
 
 let allCountries = [];
 
@@ -13,11 +34,16 @@ let allCountries = [];
  * - Utilise fetch avec async/await.
  * - Appelée UNE SEULE FOIS, au chargement de la page.
  *
- * @returns {Promise<Array>} Le tableau de tous les pays.
+ *  Le tableau de tous les pays.
  */
 async function fetchCountries() {
-  // TODO
+  let res = await fetch(API_URL);
+  let j = await res.json();
+  allCountries = j;
+  displayCountries(allCountries)
+  
 }
+fetchCountries();
 
 /**
  * Crée la carte HTML d'un pays, sur le modèle de la maquette :
@@ -27,7 +53,7 @@ async function fetchCountries() {
  * @returns {HTMLElement} La carte, prête à être ajoutée à la grille.
  */
 function createCountryCard(country) {
-  // TODO
+  card_builder("",country.name,country.capital,country.population);
 }
 
 /**
@@ -39,7 +65,11 @@ function createCountryCard(country) {
  * @param {Array} countries - Les pays à afficher.
  */
 function displayCountries(countries) {
-  // TODO
+  cards_display.textContent = "";
+  let filtered = filterCountries(countries);
+  filtered.forEach(country => {
+      createCountryCard(country);
+  });
 }
 
 /**
@@ -50,8 +80,16 @@ function displayCountries(countries) {
  *
  * Aucune requête vers l'API ici !
  */
-function filterCountries() {
-  // TODO
+function filterCountries(countries) {
+  if(select.value == "Default"){
+    return countries;
+  }
+  if(select.value == "Europe"){
+    countries = countries.filter(n => n.region = "Europe");
+    console.log("okk");
+    
+  }
+  return countries;
 }
 
 
